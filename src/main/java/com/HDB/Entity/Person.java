@@ -11,7 +11,7 @@ public class Person {
 
     private String name;
     @ManyToOne
-    @JoinColumn(name = "medic_id")
+    @JoinColumn(name = "medic")
     private Medic medic;
     private String cnp;
 
@@ -19,6 +19,10 @@ public class Person {
     public Person(String name, Medic medic,String cnp) {
         this.name = name;
         this.medic = medic;
+        this.cnp=cnp;
+    }
+    public Person(String name,String cnp) {
+        this.name = name;
         this.cnp=cnp;
     }
     public Person(){}

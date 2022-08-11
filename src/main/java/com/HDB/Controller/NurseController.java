@@ -5,6 +5,7 @@ import com.HDB.Repository.NurseRepository;
 import com.HDB.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.server.DelegatingServerHttpResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +20,11 @@ public class NurseController {
     }
     @PostMapping("/nurses")
     public Nurse createNurse(@RequestBody Nurse nurse){
-        return nurseRepository.save(nurse);
+        if(nurseRepository.findByCnp(nurse.getCnp())==null)
+        {return nurseRepository.save(nurse);}
+        else{
+            return null;
+        }
     }
     @GetMapping("/nurses/{id}")
     public Nurse getNurseById(@PathVariable(value = "id") long id) throws ResourceNotFoundException {
@@ -27,10 +32,14 @@ public class NurseController {
         return nurse;
     }
     @PutMapping("/nurses/{id}")
-    public ResponseEntity<Nurse> updatePerson(@PathVariable(value="id") long id, @RequestBody Nurse personDetails) throws ResourceNotFoundException{
+    public ResponseEntity<Nurse> nurseUpdate(@PathVariable(value="id") long id, @RequestBody Nurse nurseDetails) throws ResourceNotFoundException{
         Nurse nurse = nurseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Person not found"+id));
-        nurse.setName(personDetails.getName());
-        nurse.setCnp(personDetails.getCnp());
+        nurse.setName(nurseDetails.getName());
+        if(nurseRepository.findByCnp(nurseDetails.getCnp())==null) {
+            nurse.setCnp(nurseDetails.getCnp());
+        }else {
+            return null;
+        }
         nurseRepository.save(nurse);
         return ResponseEntity.ok().body(nurse);
     }

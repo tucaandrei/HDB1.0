@@ -10,16 +10,22 @@ public class Medic {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private String name;
-    //@OneToMany(mappedBy = "medic")
-    //private Set<Person> persons;
+    @OneToMany(mappedBy = "medic")
+    private Set<Person> personSet;
     private String cnp;
 
-    public Medic(String name, String cnp) {
+    public Medic(String name,Set<Person> personSet ,String cnp) {
         this.name = name;
         this.cnp=cnp;
-        //this.persons = persons;
+        this.personSet=personSet;
     }
-
+    public Medic(String name ,String cnp) {
+        this.name = name;
+        this.cnp=cnp;
+    }
+    public Medic(String name){
+        this.name=name;
+    }
     public Medic() {
     }
 
@@ -47,12 +53,11 @@ public class Medic {
         this.name = name;
     }
 
-    /*public Set<Person> getPersons() {
-        return persons;
+    public Set<Person> getPersonSet() {
+        return personSet;
     }
 
-    public void setPersons(Set<Person> persons) {
-        this.persons = persons;
-    }*/
-
+    public void setPersonSet(Set<Person> personSet) {
+        this.personSet = personSet;
+    }
 }

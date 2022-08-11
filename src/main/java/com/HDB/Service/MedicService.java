@@ -1,18 +1,21 @@
 package com.HDB.Service;
 
 import com.HDB.Entity.Medic;
+import com.HDB.Entity.Person;
 import com.HDB.Repository.MedicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Service
 public class MedicService {
     @Autowired
     MedicRepository medicRepository;
-    public void createMedic(String name,String cnp){
-        medicRepository.save(new Medic(name,cnp));
+    public void createMedic(String name, Set<Person> personSet, String cnp){
+        medicRepository.save(new Medic(name,personSet,cnp));
     }
-    public Medic readPerson(String name){
+    public Medic readMedic(String name){
         return medicRepository.findByName(name);
     }
     public void updateMedic(String oldName,String newName){

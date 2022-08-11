@@ -21,7 +21,11 @@ public class MedicController {
     }
     @PostMapping("/medics")
     public Medic createMedic (@RequestBody Medic medic){
-        return medicRepository.save(medic);
+        if(medicRepository.findByCnp(medic.getCnp())==null)
+        {return medicRepository.save(medic);}
+        else{
+            return null;
+        }
     }
     @GetMapping("/medics/{id}")
     public Medic getMedicById(@PathVariable(value = "id") long id) throws ResourceNotFoundException {
@@ -32,7 +36,11 @@ public class MedicController {
     public ResponseEntity<Medic> updateMedic(@PathVariable(value="id") long id, @RequestBody Medic medicDetails) throws ResourceNotFoundException{
         Medic medic = medicRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Person not found"+id));
         medic.setName(medicDetails.getName());
-        medic.setCnp(medicDetails.getCnp());
+        if(medicRepository.findByCnp(medicDetails.getCnp())==null) {
+            medic.setCnp(medicDetails.getCnp());
+        }else {
+            return null;
+        }
         medicRepository.save(medic);
         return ResponseEntity.ok().body(medic);
     }

@@ -22,7 +22,11 @@ public class PersonController {
 
     @PostMapping("/persons")
     public Person createPerson(@RequestBody Person person) {
-        return personRepository.save(person);
+        if(personRepository.findByCnp(person.getCnp())==null)
+        {return personRepository.save(person);}
+        else{
+            return null;
+        }
     }
 
     @GetMapping("/persons/{id}")
@@ -34,6 +38,11 @@ public class PersonController {
     public ResponseEntity<Person> updatePerson(@PathVariable(value="id") long id, @RequestBody Person personDetails) throws ResourceNotFoundException{
         Person person = personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Person not found"+id));
         person.setName(personDetails.getName());
+        if(personRepository.findByCnp(personDetails.getCnp())==null) {
+            person.setCnp(personDetails.getCnp());
+        }else {
+            return null;
+        }
         person.setMedic(personDetails.getMedic());
         personRepository.save(person);
         return ResponseEntity.ok().body(person);
