@@ -24,7 +24,7 @@ public class Init {
     NurseRepository nurseRepository;
     @Bean
     void populateDb(){
-        populatePerson();
+      //  populatePerson();
         populateMedic();
         populateNurse();
     }
@@ -32,10 +32,13 @@ public class Init {
         if (medicRepository.findByCnp("12345") == null) {
             medicRepository.save(new Medic("Havrincea","12345"));
         }
-    }
-    void populatePerson() {
+   // }
+   // void populatePerson() {
         Set<Person> personSet= new HashSet<Person>();
 
+        if (personRepository.findByCnp("11234") == null) {
+            personRepository.save(new Person("Tucu", medicRepository.findByCnp("12345"),"11234"));
+        }
         if (personRepository.findByCnp("11234") == null) {
             personRepository.save(new Person("Tucu", medicRepository.findByCnp("12345"),"11234"));
         }
@@ -49,7 +52,7 @@ public class Init {
         }
 
         personSet.add(personRepository.findByCnp("11114"));
-        //medicRepository.findByName("Havrincea").setPersonSet(personSet);
+        //medicRepository.findByCnp("12345").setPersonSet(personSet);
     }
     void populateNurse(){
         if(nurseRepository.findByCnp("123456")==null){

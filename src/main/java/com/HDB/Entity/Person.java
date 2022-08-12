@@ -11,7 +11,6 @@ public class Person {
 
     private String name;
     @ManyToOne
-    @JoinColumn(name = "medic")
     private Medic medic;
     private String cnp;
 

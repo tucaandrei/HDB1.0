@@ -12,8 +12,8 @@ import java.util.Set;
 public class MedicService {
     @Autowired
     MedicRepository medicRepository;
-    public void createMedic(String name, Set<Person> personSet, String cnp){
-        medicRepository.save(new Medic(name,personSet,cnp));
+    public void createMedic(String name, String cnp){
+        medicRepository.save(new Medic(name,cnp));
     }
     public Medic readMedic(String name){
         return medicRepository.findByName(name);

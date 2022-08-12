@@ -1,5 +1,7 @@
 package com.HDB.Entity;
 
+import com.HDB.Repository.MedicRepository;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -10,15 +12,15 @@ public class Medic {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private String name;
-    @OneToMany(mappedBy = "medic")
-    private Set<Person> personSet;
+    //@OneToMany(mappedBy = "medic")
+    //private Set<Person> personSet;
     private String cnp;
 
-    public Medic(String name,Set<Person> personSet ,String cnp) {
+    /*public Medic(String name,Set<Person> personSet ,String cnp) {
         this.name = name;
         this.cnp=cnp;
         this.personSet=personSet;
-    }
+    }*/
     public Medic(String name ,String cnp) {
         this.name = name;
         this.cnp=cnp;
@@ -53,11 +55,11 @@ public class Medic {
         this.name = name;
     }
 
-    public Set<Person> getPersonSet() {
+   /* public Set<Person> getPersonSet() {
         return personSet;
     }
 
     public void setPersonSet(Set<Person> personSet) {
         this.personSet = personSet;
-    }
+    }*/
 }
